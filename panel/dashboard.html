@@ -1,0 +1,108 @@
+<html>
+<head>
+<title>Firebase Authentication</title>
+<link rel="stylesheet" href="cssFile.css">
+</head>
+
+
+
+
+
+<body>
+  
+<div id="login-box">
+    <h1 id='status'>dashboard</h1>
+    <h3 id='email'>cargando...</h3>
+    <p>Led 1: <input type="number" id="led1" name="led1" min="0" max="1"></p>
+    <p>Led 2: <input type="number" id="led2" name="led2" min="0" max="1"></p>
+    <p>Led 3: <input type="number" id="led3" name="led3" min="0" max="1"></p>
+    <p>Buzzer: <input type="number" id="buzzer" name="buzzer" min="0" max="1"></p>
+    <p>Leds Inteligentes: <input type="number" id="leds_inteligentes" name="leds_inteligentes" min="0" max="1"></p>
+    Mensaje para mostrar en el Oled: <input type="text" id="oled" name="oled" placeholder="Ingresa Mensaje (Oled)" />
+
+    <input type="submit" id='send_data' name="sendData" value="Enviar" />
+  
+</div>
+</body>
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js";
+  import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-database.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-auth.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAXZzTwC_Nqh-ZCepllSi8XKTnOcd6UtY4",
+  authDomain: "esp32-bd971.firebaseapp.com",
+  databaseURL: "https://esp32-bd971-default-rtdb.firebaseio.com",
+  projectId: "esp32-bd971",
+  storageBucket: "esp32-bd971.appspot.com",
+  messagingSenderId: "174067091908",
+  appId: "1:174067091908:web:c70265a69ddb439c0a3c91",
+  measurementId: "G-MYPPQJS3MT"
+};
+
+
+// Initialize Firebase
+
+const app = initializeApp(firebaseConfig);
+
+  const database = getDatabase(app);
+  const auth = getAuth();
+
+
+const user = auth.currentUser;
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    const uid = user.uid;
+   document.getElementById('email').innerText=user.email;
+
+    //bla bla bla
+    // ...
+
+     send_data.addEventListener('click',(e)=>{
+       var led1 = document.getElementById('led1').value;
+       var led2 = document.getElementById('led2').value;
+       var led3 = document.getElementById('led3').value;
+       var buzzer = document.getElementById('buzzer').value;
+       var oled = document.getElementById('oled').value;
+       var leds_inteligentes = document.getElementById('leds_inteligentes').value;
+
+        // Signed in
+
+         update(ref(database, 'UsersData/' + user.uid +'/writtings/tempLogger/'),{
+          led1,
+          led2,
+          led3,
+          buzzer,
+          leds_inteligentes,
+          oled,
+        })
+     alert(/listo el pollo, espera unos 3 minutos para ver el cambio/)
+
+     });
+
+  } else {
+    // User is signed out
+    // ...
+    //bla bla bla
+    window.location = "/panel/login.html";
+  }
+});
+
+
+
+
+
+
+
+
+
+</script>
+
+</html>
+

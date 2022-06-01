@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>
+IoTfun is a new company
+</title>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  font-size: 1.3em;
+  line-height: 1.4;
+  text-align: center;
+  margin:0;
+}
+
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #eee;
+  position: fixed;
+  top: 0;
+  z-index:1;
+  width: 100%;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  color: blue;
+}
+
+.active {
+  background-color: lightblue;
+}
+
+
+h2 {
+  margin-top: 90px;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 1em 0;
+  text-align: left;
+}
+
+.card {
+  width: 30%;
+  display: flex;
+  background: #eee;
+  padding: .6em 1em .6em .6em;
+  margin-bottom: 1em;
+  border-radius: .3em;
+  box-shadow: rgba(0, 0, 0, 0.2) 3px 6px 10px;
+  border: solid 1px #ccc;
+}
+
+.img {
+  min-width: 80px;
+  height: 80px;
+  border-radius: .3em;
+  background: linear-gradient(to bottom, #d6c091 0%, #C05C9A 100%);
+  opacity: .7;
+  margin: 0 .6em 0 0;
+  border: solid 1px firebrick;
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 1em;
+}
+
+.content p {
+  margin: 0;
+  font-size: .7em;
+  color: #222;
+}
+
+@media (max-width: 820px) {
+  .container {
+    min-width: auto;
+    display: block;
+  }
+  .card {
+    width: 100%;
+  }
+}
+  a { text-decoration: none; }
+
+@media (max-width: 480px) {
+  .card {
+    box-shadow: none;
+  }
+}
+</style>
+<body>
+<ul>
+  <li><a class="active" href="#home">Home</a></li>
+  <li><a href="/panel/login.html">Panel</a></li>
+  <li><a href="#contact">Contacto</a></li>
+  <li><a href="#about">Acerca de</a></li>
+</ul>
+<h2>IoTfun</h2>
+<p>Somos una empresa dedicada a soluciones IoT.</p>
+
+<main class="container">
+  <div class="card">
+    <div class="img"></div>
+    <div class="content"><h3>Registrador de Sensores</h3><p>Guardamos los datos de la temperatura, la intensidad de luz, humedad, presión, en la nube, posteriormente graficamos la informacion generada.</p>
+          <a href="esp32_desc.html">
+              <button>+ Info</button>
+          </a>
+    </div>
+  </div>
+  <div class="card">
+    <div class="img"></div>
+    <div class="content"><h3>Camara Vigilancia IP IoT</h3><p>Requiere conexion WiFi. Toma capturas cada 3 minutos y los sube a la nube, se puede acceder a la camara en tiempo real por la IP de LAN.</p></div>
+  </div>
+  <div class="card">
+    <div class="img"></div>
+    <div class="content"><h3>Medidor de Ruido Ambiental</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></div>
+  </div>
+  <div class="card">
+    <div class="img"></div>
+    <div class="content"><h3>Traqueador de Objetos</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></div>
+  </div>
+  <div class="card">
+    <div class="img"></div>
+    <div class="content"><h3>Sistema de Riegue</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></div>
+  </div>
+  <div class="card">
+    <div class="img"></div>
+    <div class="content"><h3>Casa Inteligente</h3><p>Instalamos en tu casa un sistema para poder encender/apagar luces, ventildores, sistema de rigue, medidor de ruido ambiental, etc. Desde cualquier parte del mundo usando tu celular.</p>
+          <a href="esp32_desc.html">
+              <button>+ Info</button>
+          </a>
+          <a href="esp32_panel.html">
+              <button>Panel</button>
+          </a>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+  </div>
+</main>
+<hr/>
+<small>2022 - Todos los derechos reservados.</small>
+
+
+
+
+
+
+</body>
+</html>
+

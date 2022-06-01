@@ -1,0 +1,344 @@
+<html>
+<head>
+    <title>Panel</title>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{font-family:monospace;}
+  .cards {
+    margin: auto;
+    max-width:800px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .card {
+    flex: 1 0 200px;
+    text-align:center;
+  }
+  .card .text {
+    padding: 0 20px 20px;
+  }
+.title { text-align: center; }
+  .hide { display: none; }
+  .green { background:green;}
+  .red { background:red;}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.alert {
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+  opacity: 1;
+  transition: opacity 0.6s;
+  margin-bottom: 15px;
+}
+
+.alert.success {background-color: #04AA6D;}
+.alert.info {background-color: #2196F3;}
+.alert.warning {background-color: #ff9800;}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.center { text-align: center; max-width:900px;}
+
+.closebtn:hover {
+  color: black;
+}
+</style>
+</head>
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js";
+  import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-database.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-auth.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAXZzTwC_Nqh-ZCepllSi8XKTnOcd6UtY4",
+  authDomain: "esp32-bd971.firebaseapp.com",
+  databaseURL: "https://esp32-bd971-default-rtdb.firebaseio.com",
+  projectId: "esp32-bd971",
+  storageBucket: "esp32-bd971.appspot.com",
+  messagingSenderId: "174067091908",
+  appId: "1:174067091908:web:c70265a69ddb439c0a3c91",
+  measurementId: "G-MYPPQJS3MT"
+};
+
+
+// Initialize Firebase
+
+const app = initializeApp(firebaseConfig);
+
+const database = getDatabase(app);
+const auth = getAuth();
+
+const user = auth.currentUser;
+console.log(user)
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    const uid = user.uid;
+    window.alert(/estas logeado/)
+      /*set(ref(database, 'users/' + user.uid),{
+          username: username,
+          email: email
+      })*/
+
+
+    //bla bla bla
+    // ...
+  } else {
+    // User is signed out
+    // ...
+    //bla bla bla
+  }
+});
+ send_data.addEventListener('click',(e)=>{
+   var email = document.getElementById('email').value;
+   var password = document.getElementById('password').value;
+   /*var led1 = document.getElementById('led1').value;
+   var led2 = document.getElementById('led2').value;
+   var led3 = document.getElementById('led3').value;
+   var buzzer = document.getElementById('buzzer').value;
+   var oled = document.getElementById('oled_128_32').value;
+   var leds_inteligentes = document.getElementById('leds_inteligentes').value;*/
+
+    // Signed in
+    const user = userCredential.user;
+    console.log(' the beautiful people ');
+    console.log(user);
+
+     update(ref(database, 'UsersData/' + user.uid +'/writtings/tempLogger/'),{
+      led1,
+      led2,
+      led3,
+      buzzer,
+      leds_inteligentes,
+      oled,
+    })
+
+ });
+
+
+</script>
+
+
+<body>
+<div id="loading" style="height:100%;width:99%;position:absolute;background-color:white;text-align:center;">
+    <h3 class="loader">Cargando...</h3>
+</div>
+
+<div id="alerts" style="position:fixed;text-align:center;">
+</div>
+
+<h3 class="title">Panel</h3>
+<hr/>
+<span class="center">
+    <p><b>Guardando cada 3 minutos valores de los sensores en el usuario: </b><span id="user"></span></p>
+    <p>Reloj Arduino (<a href="https://www.worlddata.info/timezones/gmt-greenwich-mean-time.php">GMT</a>): <span id="localtime"></span></p>
+    <p id="refreshing"></p>
+</span>
+<main class="cards hide" id="inicio">
+<article class="card">
+<div class="text">
+    <h5>Sensor Temperatura</h5>
+    <span id="celsius"></span> <br>
+    <span id="fahrenheit"></span>
+</div>
+</article>
+<article class="card">
+<div class="text">
+<h5>Sensor LDR</h5>
+Intensidad de Luz: <span id="ldr"></span>
+</div>
+</article>
+<article class="card">
+<div class="text">
+<h5>Sensor TILT</h5>
+<span id="tilt"></span>
+</div>
+</article>
+<article class="card">
+<div class="text">
+<h5>Buzzer</h5>
+<button class="green" onclick="enviar_sonido()">Enviar Sonido</button>
+</div>
+</article>
+<article class="card">
+<div class="text">
+<h5>LED 1</h5>
+  <button class="green" onclick="accion_led(1,'encender')">Encender</button>
+  <button class="red" onclick="accion_led(1,'apagar')" value="Apagar">Apagar</button>
+</div>
+</article>
+<article class="card">
+<div class="text">
+<h5>LED 2</h5>
+  <button class="green" onclick="accion_led(2,'encender')">Encender</button>
+  <button class="red" onclick="accion_led(2,'apagar')" value="Apagar">Apagar</button>
+</div>
+</article>
+<article class="card">
+<div class="text">
+<h5>LED 3</h5>
+  <button class="green" onclick="accion_led(3,'encender')">Encender</button>
+  <button class="red" onclick="accion_led(3,'apagar')" value="Apagar">Apagar</button>
+</div>
+</article>
+<article class="card">
+<div class="text">
+<h5>LEDs Inteligentes WS2812b</h5>
+<button class="green" onclick="window.alert(/No implementado/)">Encender</button>
+<button class="red" onclick="window.alert(/No implementado/)">Apagar</button>
+</div>
+</article>
+<article class="card">
+<div class="text">
+<h5>OLED 128X32</h5>
+<form onsubmit="send_oled_message(event)">
+  Ingresa el Mensaje: <input type="text" name="oled" id="oled">
+  <input class="button green" type="submit" value="Enviar">
+</form>
+</div>
+</article>
+</main>
+</body>
+
+        <script>
+            getdata();
+            function countdown(remaining) {
+                if(remaining <= 0){getdata(); remaining=5;}
+                document.getElementById('refreshing').innerText = 'Auto refresco en... '+remaining;
+                // Llamo cada segundo una funcion nueva
+                setTimeout(function(){ countdown(remaining - 1); }, 1000);
+            } // 5 seconds
+            countdown(5)
+
+
+
+
+            function close_alert(element){
+                document.getElementById('alerts').innerHTML=''
+            }
+
+            async function accion_led(led, accion){
+
+                async function enviar_peticion(){
+                    var response;
+                    if(accion == "encender"){ 
+                        document.getElementById('alerts').innerHTML+="<div class=\"alert info\"> <span class=\"closebtn\" onclick=\"close_alert()\">&times;</span>  <strong>Info!</strong> Encendiendo el led: "+led+"</div>"
+                        response = await fetch(`/api/led/encender?led=${led}`); 
+                    } else if(accion == "apagar"){
+                        document.getElementById('alerts').innerHTML+="<div class=\"alert info\"> <span class=\"closebtn\" onclick=\"close_alert()\">&times;</span>  <strong>Info!</strong> Apagando el led: "+led+"</div>"
+                        response = await fetch(`/api/led/apagar?led=${led}`); 
+                    }
+
+                  // only proceed once promise is resolved
+                  var data = await response.json();
+                  console.log('printing data server')
+                  console.log(data);
+                  return data;
+                }
+                enviar_peticion()
+                    .then(function(data){ 
+                        document.getElementById('alerts').innerHTML+="<div class=\"alert success\" > <span class=\"closebtn\" onclick=\"close_alert()\">&times;</span>  <strong>Exito!</strong> La petición se envió correctamente.  </div>"
+                    })
+                    .catch(function (reason){
+                                document.getElementById('alerts').innerHTML+="<div class=\"alert error\" > <span class=\"closebtn\" onclick=\"close_alert()\">&times;</span>  <strong>Error!</strong> "+reason+"  </div>";
+                    })
+            }
+            async function send_oled_message(e){
+                e.preventDefault();
+                currentvalue = document.getElementById('oled').value;
+                if(currentvalue==''){
+                    document.getElementById('alerts').innerHTML+="<div class=\"alert error\" > <span class=\"closebtn\" onclick=\"close_alert()\">&times;</span>  <strong>Error!</strong> El mensaje no puede estar vacio.  </div>";
+                    return;
+                }
+
+                document.getElementById('alerts').innerHTML+="<div class=\"alert info\"> <span class=\"closebtn\" onclick=\"close_alert()\">&times;</span>  <strong>Info!</strong> Enviando texto "+currentvalue+" al display</div>"
+
+                // await response of fetch call
+                fetch(`/api/display?message=${currentvalue}`)
+                .then(response => response.json())
+                .then(function(data){ 
+                    document.getElementById('alerts').innerHTML+="<div class=\"alert success\" > <span class=\"closebtn\" onclick=\"close_alert()\">&times;</span>  <strong>Exito!</strong> La petición se envió correctamente.  </div>"
+                })
+                .catch(function (reason){
+                            document.getElementById('alerts').innerHTML+="<div class=\"alert error\" > <span class=\"closebtn\" onclick=\"close_alert()\">&times;</span>  <strong>Error!</strong> "+reason+"  </div>";
+                })
+            }
+
+
+            function enviar_sonido () {
+                document.getElementById('alerts').innerHTML+="<div class=\"alert info\"> <span class=\"closebtn\" onclick=\"close_alert()\">&times;</span>  <strong>Info!</strong> Enviando sonido al Buzzer</div>"
+
+                  // await response of fetch call
+                    fetch('/buzzer')
+                    .then(response => response.json())
+                    .then(function(data){ 
+                        document.getElementById('alerts').innerHTML+="<div class=\"alert success\" > <span class=\"closebtn\" onclick=\"close_alert()\">&times;</span>  <strong>Exito!</strong> La petición se envió correctamente.  </div>"
+                    })
+                    .catch(function (reason){
+                                document.getElementById('alerts').innerHTML+="<div class=\"alert error\" > <span class=\"closebtn\" onclick=\"close_alert()\">&times;</span>  <strong>Error!</strong> "+reason+"  </div>";
+                    })
+            }
+
+            // trigger async function
+            // log response or catch error of fetch promise
+
+            async function getdata(){
+                getdata_sensors()
+                    .then(function(data){ 
+                      document.getElementById('celsius').innerText=data["temp_celsius"]+'° Celsius';
+                      document.getElementById('fahrenheit').innerText=data['temp_fahrenheit']+'° Fahrenheit';
+                      document.getElementById('ldr').innerText=data['ldr'];
+                      document.getElementById('tilt').innerText=data['tilt'];
+                      document.getElementById('user').innerText=data['user'];
+                      document.getElementById('localtime').innerText=data['localtime'];
+                      document.getElementById('loading').style="display:none;"
+                      document.getElementById('inicio').classList.remove('hide');
+                    }).catch(function (reason) { 
+                            document.getElementById('alerts').innerHTML+="<div class=\"alert error\" > <span class=\"closebtn\" onclick=\"close_alert()\">&times;</span>  <strong>Error!</strong> "+reason+"  </div>";
+                    })
+             }
+
+            async function getdata_sensors() {
+              // await response of fetch call
+              let response = await fetch('/api/sensors');
+              // only proceed once promise is resolved
+              var data = await response.json();
+              console.log('printing data server')
+              console.log(data);
+
+              // only proceed once second promise is resolved
+              return data;
+            }
+
+
+
+
+        </script>
+
+
+</html>
